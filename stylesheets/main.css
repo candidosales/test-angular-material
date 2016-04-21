@@ -1,21 +1,9 @@
-/*body {
-  overflow: hidden;
-}*/
-
-.sidenav {
-  background: #ccc;
-}
-
 .menu-item, .client-list {
   height: 50px;
 }
 .client-list {
   height: 100px;
 }
-/*
-.container {
-  height: 100%;
-}*/
 
 @font-face {
   font-family: 'Material Icons';
@@ -67,3 +55,17 @@
 /* Rules for using icons as white on a dark background. */
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+.md-autocomplete-suggestions-container.md-default-theme li .highlight, .md-autocomplete-suggestions-container li .highlight {
+  font-weight: bold;
+}
+
+.header h1{
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+
+md-sidenav > md-list > md-list-item.md-2-line, md-sidenav md-list-item.md-2-line>.md-no-style {
+  min-height: inherit;
+}

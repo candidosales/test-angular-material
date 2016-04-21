@@ -1,16 +1,56 @@
-<md-input-container class="md-icon-float md-block">
-  <!-- Use floating label instead of placeholder -->
-  <label>Busque por nome ou número </label>
-  <md-icon class="material-icons">search</md-icon>
-  <input ng-model="user.name" type="text">
-</md-input-container>
-<md-list flex>
-  <md-subheader class="md-no-sticky">{{clients.length}} clientes</md-subheader>
-  <md-list-item class="md-3-line client-list" ng-repeat="client in clients">
-    <div class="md-list-item-text" layout="column">
-      <h3>{{ client.name }}</h3>
-      <h4>{{ client.email }}</h4>
-      <p>{{ client.tel }}</p>
+<div layout="row">
+  <div flex="90">
+    <md-autocomplete
+            ng-disabled="isDisabled"
+            md-no-cache="noCache"
+            md-selected-item="selectedItem"
+            md-search-text-change="searchTextChange(searchText)"
+            md-search-text="searchText"
+            md-selected-item-change="selectedItemChange(item)"
+            md-items="item in querySearch(searchText)"
+            md-item-text="item.display"
+            md-min-length="0"
+            placeholder="Qual o nome ou telefone do cliente?">
+          <md-item-template>
+            <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.display}}</span>
+          </md-item-template>
+          <md-not-found>
+            No states matching "{{searchText}}" were found.
+            <a ng-click="newState(searchText)">Create a new one!</a>
+          </md-not-found>
+        </md-autocomplete>  
+  </div>
+  <div flex="10">
+    <md-button md-no-ink class="md-primary">
+      <md-icon class="material-icons">add</md-icon>Adicionar
+    </md-button>
+  </div>
+</div>
+<md-card ng-show="selected">
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">{{selected.name}}</span>
+      <span class="md-subhead">{{selected.email}}</span>
+    </md-card-title-text>
+    <md-card-title-media>
+      <div class="md-media-lg card-media"></div>
+    </md-card-title-media>
+  </md-card-title>
+  <md-card-actions layout="row" layout-align="end center">
+    <md-button>Novo endereço</md-button>
+  </md-card-actions>
+  <md-divider ></md-divider>
+  <md-subheader class="md-no-sticky">Endereços</md-subheader>
+  <md-list-item class="md-2-line" ng-repeat="address in selected.addresses">
+    <md-icon class="material-icons">place</md-icon>
+    <div class="md-list-item-text">
+      <h3> {{ address.address }} </h3>
+      <p>{{ address.neighborhood }}, {{ address.city }}-{{ address.state }}</p>
     </div>
+    <md-button class="md-secondary md-icon-button" ng-click="doSecondaryAction($event)" ng-if="phone.options.actionIcon" aria-label="call">
+      <md-icon md-svg-icon="{{phone.options.actionIcon}}"></md-icon>
+    </md-button>
   </md-list-item>
 </md-list>
+
+</md-card>

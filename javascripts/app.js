@@ -1,4 +1,4 @@
-var app = angular.module('App', ['ngMaterial', 'ui.router']);
+var app = angular.module('App', ['ngMaterial', 'ui.router','angucomplete-alt']);
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
   $urlRouterProvider.otherwise('/');
