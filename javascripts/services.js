@@ -4,23 +4,20 @@ app.service('clientService', ['$q','$http', function($q, $http) {
       id: 1,
       name: 'Candido',
       email: 'candidosg@gmail.com',
-      addresses: [{ id: 4, tel: '99 545433-5216', address: 'Rua fulano de tal, n° 300', neighborhood: 'Fátima', city: 'Teresina', state: 'PI'}],
+      tels: ['99 545433-5216'],
+      addresses: [4]
     }, {
       id: 2,
       name: 'Candiditi',
       email: 'tete@gmail.com',
-      addresses: [
-        { id: 6, tel: '99 545433-5216', address: 'Rua Visconde da Parnaíba, n° 3030', neighborhood: 'Horto', city: 'Teresina', state: 'PI'},
-        { id: 5, tel: '11 34333-5216', address: 'Rua Jockey Clube, n° 500', neighborhood: 'Jockey', city: 'Teresina', state: 'PI'}
-      ],
+      tels: ['99 545433-5216', '11 34333-5216'],
+      addresses: [6, 5]
     }, {
       id: 3,
       name: 'Noé Rodrigues',
       email: 'free@gmail.com',
-      addresses: [
-        { id: 1, tel: '86 12321-3221', address: 'Avenida Marechal Castelo Branco, n° 500', neighborhood: 'Castelo', city: 'Teresina', state: 'PI'},
-        { id: 2, tel: '11 87622-3313', address: 'Avenida Pres. Kennedy, n° 1800', neighborhood: 'Morros', city: 'Teresina', state: 'PI'}
-      ],
+      tels: ['86 12321-3221', '11 87622-3313'],
+      addresses: [ 1, 2 ]
     }
   ];
   
@@ -29,19 +26,25 @@ app.service('clientService', ['$q','$http', function($q, $http) {
   }
   
   function getAddresses(id) {
-   var request = $http({
-                    method: 'get',
-                    url: '/clients/' + id + '/addresses',
-                });
-    return( request.then( handleSuccess, handleError ) );
+  //  var request = $http({
+  //                   method: 'get',
+  //                   url: '/clients/' + id + '/addresses',
+  //               });
+  //   return( request.then( handleSuccess, handleError ) );
   }
   
-  function get(id) {
-   var request = $http({
-                    method: 'get',
-                    url: '/clients/' + id,
-                });
-    return( request.then( handleSuccess, handleError ) );
+  function get(args) {
+    var id = args.id;    
+    for (var i = 0; i < clients.length ; i++) {
+      if (clients[i].id === id ) {
+        return clients[i];
+      }
+    }
+  //  var request = $http({
+  //                   method: 'get',
+  //                   url: '/clients/' + id,
+  //               });
+  //   return( request.then( handleSuccess, handleError ) );
   }
   
   function handleError( response ) {
@@ -61,10 +64,170 @@ app.service('clientService', ['$q','$http', function($q, $http) {
     return( response.data );
   }
   
+  function create(args) {
+    
+  }
+  
+  function update(args) {
+    
+  }
+  
   return {
     loadAll: loadAll,
     get: get,
-    getAddresses: getAddresses
+    getAddresses: getAddresses,
+    create:create,
+    update:update
   }
   
+}]);
+
+app.service('addressService', ['$q','$http', function($q, $http) {
+  var addresses = [
+    {
+      id: 4, 
+      address: 'Rua fulano de tal',
+      number: 300, 
+      neighborhood: { id: 1, name: 'Fátima' }, 
+      city: 'Teresina', 
+      state: 'PI', 
+      cep: '64010-350',
+      complement: 'Próximo a Av. João XXIII',
+      client: 1
+    }, {
+      id: 6, 
+      address: 'Rua Visconde da Parnaíba',
+      number: 3030, 
+      neighborhood: { id: 2, name: 'Nossa Senhora de Fátima' }, 
+      city: 'Teresina', 
+      state: 'PI', 
+      cep: '64010-350',
+      complement: 'Perto da Potycabana',
+      client: 2
+    }, { 
+      id: 5, 
+      tel: '11 34333-5216', 
+      address: 'Rua Jockey Clube',
+      number: 500, 
+      neighborhood: { id: 3, name: 'Jockey' }, 
+      city: 'Teresina', 
+      state: 'PI', 
+      cep: '64010-350',
+      complement: 'Apt 145',
+      client: 2
+    }, {
+      id: 1, 
+      tel: '86 12321-3221', 
+      address: 'Avenida Marechal Castelo Branco',
+      number: 500, 
+      neighborhood: { id: 3, name: 'Jockey' }, 
+      city: 'Teresina', 
+      state: 'PI', 
+      cep: '64010-350',
+      complement: '',
+      client: 3
+    }, { 
+      id: 2, 
+      tel: '11 87622-3313', 
+      address: 'Avenida Pres. Kennedy',
+      number: 1800, 
+      neighborhood: { id: 3, name: 'Jockey' }, 
+      city: 'Teresina', 
+      state: 'PI', 
+      cep: '64010-350',
+      complement: 'Próximo ao Frigotil',
+      client: 3
+    }
+  ];
+  
+  function get(args) {
+    var id = args.id;
+    console.log('getIdAddress', id);
+
+    for (var i = 0; i < addresses.length ; i++) {
+      if (addresses[i].id === id ) {
+        return addresses[i];
+      }
+    }
+  }
+  
+  function getAllByClient(args) {
+    var id = args.id;
+    
+    return addresses.filter(function(address) {
+      if (address.client === id) {
+        return address;
+      }
+    });
+  }
+  
+  function create(args) {
+    var address = args.address;
+    address.id = parseInt(address.id);  
+    
+    addresses.push(address);
+    return true;
+  }
+  
+  function update(args) {
+    var address = args.address;
+    address.id = parseInt(address.id);  
+    
+    for (var i = 0; i < addresses.length; i++) {
+      if (address.id == addresses[i].id) {
+        addresses[i] = address;
+        return true;
+      }
+    }
+  }
+  
+  return {
+    get:get,
+    getAllByClient:getAllByClient,
+    create:create,
+    update:update
+  }
+}]);
+
+app.service('neighborhoodService', ['$q','$http', function($q, $http) {
+  var neighborhoods = [
+    {
+      id: 1, 
+      name: 'Mocambinho',
+    }, {
+      id: 2, 
+      name: 'Nossa Senhora de Fátima',
+    }, { 
+      id: 3, 
+      name: 'Jockey'  
+    }
+  ];
+  
+  function loadAll(args) {
+    return neighborhoods;
+  }
+  
+  function get(args) {
+    var id = args.id;
+    for (var i = 0; i < addresses.length ; i++) {
+      if (addresses[i].id === id ) {
+        return addresses[i];
+      }
+    }
+  }
+  
+  function create(args) {
+    
+  }
+  
+  function update(args) {
+    
+  }
+  
+  return {
+    loadAll: loadAll,
+    get: get,
+    create:create,
+    update:update
+  }
 }]);

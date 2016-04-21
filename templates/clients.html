@@ -1,5 +1,5 @@
 <div layout="row">
-  <div flex="90">
+  <div flex="85">
     <md-autocomplete
             ng-disabled="isDisabled"
             md-no-cache="noCache"
@@ -20,37 +20,12 @@
           </md-not-found>
         </md-autocomplete>  
   </div>
-  <div flex="10">
+  <div flex="15">
     <md-button md-no-ink class="md-primary">
-      <md-icon class="material-icons">add</md-icon>Adicionar
+      Adicionar cliente
     </md-button>
   </div>
 </div>
-<md-card ng-show="selected">
-  <md-card-title>
-    <md-card-title-text>
-      <span class="md-headline">{{selected.name}}</span>
-      <span class="md-subhead">{{selected.email}}</span>
-    </md-card-title-text>
-    <md-card-title-media>
-      <div class="md-media-lg card-media"></div>
-    </md-card-title-media>
-  </md-card-title>
-  <md-card-actions layout="row" layout-align="end center">
-    <md-button>Novo endereço</md-button>
-  </md-card-actions>
-  <md-divider ></md-divider>
-  <md-subheader class="md-no-sticky">Endereços</md-subheader>
-  <md-list-item class="md-2-line" ng-repeat="address in selected.addresses">
-    <md-icon class="material-icons">place</md-icon>
-    <div class="md-list-item-text">
-      <h3> {{ address.address }} </h3>
-      <p>{{ address.neighborhood }}, {{ address.city }}-{{ address.state }}</p>
-    </div>
-    <md-button class="md-secondary md-icon-button" ng-click="doSecondaryAction($event)" ng-if="phone.options.actionIcon" aria-label="call">
-      <md-icon md-svg-icon="{{phone.options.actionIcon}}"></md-icon>
-    </md-button>
-  </md-list-item>
-</md-list>
-
-</md-card>
+<md-content>
+  <div ui-view></div>
+</md-content>

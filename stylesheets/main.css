@@ -69,3 +69,7 @@
 md-sidenav > md-list > md-list-item.md-2-line, md-sidenav md-list-item.md-2-line>.md-no-style {
   min-height: inherit;
 }
+
+md-list-item.active, md-list-item.active md-icon, .md-button.active, .md-button.md-icon-button.active md-icon {
+    color: #106CC8;
+}

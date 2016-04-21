@@ -15,6 +15,21 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: 'templates/clients.html',
       controller: 'ClientsCtrl'
     })
+    .state('home.clients.client', {
+      url: '/{idClient:int}',
+      templateUrl: 'templates/client.html',
+      controller: 'ClientCtrl'
+    })
+    .state('home.clients.client.addressEdit', {
+      url: '/address/{idAddress:int}',
+      templateUrl: 'templates/addressForm.html',
+      controller: 'AddressCtrl'
+    })
+    .state('home.clients.client.addressNew', {
+      url: '/address/',
+      templateUrl: 'templates/addressForm.html',
+      controller: 'AddressCtrl'
+    })
     .state('home.addresses', {
       url: 'addresses',
       templateUrl: 'templates/addresses.html',
